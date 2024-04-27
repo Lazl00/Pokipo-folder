@@ -16,6 +16,8 @@ class Joueur:
         self.gravite = 0.20
         self.vel_x = 0
         self.vel_y = 0
+        self.marche = False
+        self.direction=-1 # 0 gauche    1 droite
         
         # État du joueur
         self.grounded = True
@@ -25,10 +27,16 @@ class Joueur:
         # Gestion des déplacements horizontaux
         if pyxel.btn(pyxel.KEY_Q):
             self.vel_x = -self.vitesse
+            self.marche = True
+            self.direction = -1
         elif pyxel.btn(pyxel.KEY_D):
             self.vel_x = self.vitesse
+            self.marche = True
+            self.direction = 1
         else:
             self.vel_x = 0
+            self.marche = False
+        
         
         # Gestion du saut et double saut
         if pyxel.btnp(pyxel.KEY_SPACE):
@@ -60,7 +68,17 @@ class Joueur:
 
     def draw(self):
         # Dessiner le joueur
-        pyxel.rect(self.x, self.y, self.largeur, self.hauteur, 9)
+        if self.marche == False:
+                if pyxel.frame_count % 120 < 60:
+                    pyxel.blt(self.x, self.y, 0, 0, 72, self.direction*self.largeur, self.hauteur, 2)
+                else:
+                    pyxel.blt(self.x, self.y, 0, 8, 72, self.direction*self.largeur, self.hauteur, 2)
+        if self.marche == True:
+            if pyxel.frame_count % 20 < 10:
+                pyxel.blt(self.x, self.y, 0, 0, 64, self.direction*self.largeur, self.hauteur, 2)
+            else:
+                pyxel.blt(self.x, self.y, 0, 8, 64, self.direction*self.largeur, self.hauteur, 2)
+
         
 class App:
     def __init__(self):
@@ -74,7 +92,7 @@ class App:
 
     def draw(self):
         # Remplir l'écran avec une couleur de fond grise
-        pyxel.cls(13)
+        pyxel.cls(12)
         # Dessiner le joueur
         self.joueur.draw()
 
