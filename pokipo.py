@@ -13,6 +13,7 @@ class Joueur:
         # Paramètres de mouvement
         self.vitesse = 1.5
         self.puissance_saut = 3
+        self.gravite = 0.20
         self.vel_x = 0
         self.vel_y = 0
         
@@ -37,9 +38,13 @@ class Joueur:
             elif self.a_double_saut:
                 self.vel_y = -self.puissance_saut
                 self.a_double_saut = False
+        
+        # Gestion du fast fall
+        if pyxel.btn(pyxel.KEY_S) and not self.grounded:
+            self.vel_y += 1.2 * self.gravite
 
         # Gravité
-        self.vel_y += 0.20
+        self.vel_y += self.gravite
 
         # Mise à jour de la position
         self.x += self.vel_x
@@ -60,6 +65,7 @@ class Joueur:
 class App:
     def __init__(self):
         pyxel.init(160, 120, fps=60)
+        pyxel.load("pokipo.pyxres")
         self.joueur = Joueur(80, 60)
         pyxel.run(self.update, self.draw)
 
