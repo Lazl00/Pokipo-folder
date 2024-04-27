@@ -68,12 +68,17 @@ class Joueur:
 
     def draw(self):
         # Dessiner le joueur
-        if self.marche == False:
+        if not self.grounded:
+                if pyxel.frame_count % 20 < 10:
+                    pyxel.blt(self.x, self.y, 0, 16, 16, self.direction*self.largeur, self.hauteur, 2)
+                else:
+                    pyxel.blt(self.x, self.y, 0, 24, 16, self.direction*self.largeur, self.hauteur, 2)
+        if self.marche == False and self.grounded:
                 if pyxel.frame_count % 120 < 60:
                     pyxel.blt(self.x, self.y, 0, 0, 72, self.direction*self.largeur, self.hauteur, 2)
                 else:
                     pyxel.blt(self.x, self.y, 0, 8, 72, self.direction*self.largeur, self.hauteur, 2)
-        if self.marche == True:
+        if self.marche == True and self.grounded:
             if pyxel.frame_count % 20 < 10:
                 pyxel.blt(self.x, self.y, 0, 0, 64, self.direction*self.largeur, self.hauteur, 2)
             else:
