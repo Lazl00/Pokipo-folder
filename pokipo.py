@@ -149,13 +149,13 @@ class Joueur:
 
     def draw(self):
         # Dessiner le joueur
-        if self.court and self.grounded and not self.court_max:               #anim début de course (pré-glissade)
+        if self.court and self.grounded and not self.court_max:                                             #anim début de course (pré-glissade)
                 if pyxel.frame_count % 8 < 4:
                     pyxel.blt(self.x, self.y, 0, 16, 64, self.direction*self.largeur, self.hauteur, 2)
                 else:
                     pyxel.blt(self.x, self.y, 0, 24, 64, self.direction*self.largeur, self.hauteur, 2)
 
-        if self.court_max and self.grounded:           #anim course max (glissade)
+        if self.court_max and self.grounded:                                                                #anim course max (glissade)
                     pyxel.blt(self.x, self.y, 0, 16, 72, self.direction*self.largeur, self.hauteur, 2)
 
         if not self.grounded and not self.est_en_airdash:                                                  #anim vol
@@ -164,7 +164,7 @@ class Joueur:
                 else:
                     pyxel.blt(self.x, self.y, 0, 24, 16, self.direction*self.largeur, self.hauteur, 2)
 
-        if self.marche == False and self.grounded:     #anim statique
+        if self.marche == False and self.grounded:                                                          #anim statique
                 if pyxel.frame_count % 120 < 60:
                     pyxel.blt(self.x, self.y, 0, 0, 72, self.direction*self.largeur, self.hauteur, 2)
                 else:
@@ -176,9 +176,9 @@ class Joueur:
             elif not self.est_en_dash:
                 pyxel.blt(self.x, self.y, 0, 8, 64, self.direction*self.largeur, self.hauteur, 2)
 
-        if self.court_max and self.est_en_dash:               #anim dash
+        if self.est_en_dash:               #anim dash
              pyxel.blt(self.x, self.y, 0, 0, 80, self.direction*self.largeur, self.hauteur, 2)
-        if self.court_max and self.est_en_airdash:               #anim airdash
+        if self.est_en_airdash:               #anim airdash
              pyxel.blt(self.x, self.y, 0, 0, 80, self.direction*self.largeur, self.hauteur, 2)
         
 
