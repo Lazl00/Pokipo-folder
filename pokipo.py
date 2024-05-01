@@ -90,7 +90,7 @@ class Joueur:
         # Gestion du air dash
         if pyxel.btn( pyxel.MOUSE_BUTTON_RIGHT) and not self.grounded and self.airdash_dispo :
             self.gravite=0
-            self.vel_x = self.direction*5
+            self.vel_x = self.direction*6
             self.jauge_airdash += 1
             if self.jauge_airdash>=10:
                 self.airdash_dispo = False
@@ -99,11 +99,11 @@ class Joueur:
         # Gestion du dash
         if pyxel.btn( pyxel.MOUSE_BUTTON_RIGHT) and self.grounded and self.dash_dispo :
             if not self.court_max:
-                 self.vel_x = self.direction*5
+                 self.vel_x = self.direction*4
             if self.court_max:
-                 self.vel_x = self.direction*6
+                 self.vel_x = self.direction*5
             self.jauge_dash += 1
-            if self.jauge_dash >= 8:
+            if self.jauge_dash >= 10:
                 self.dash_dispo = False
         
         if pyxel.btn( pyxel.MOUSE_BUTTON_RIGHT) and self.grounded and self.dash_dispo:
@@ -170,7 +170,7 @@ class Joueur:
                 else:
                     pyxel.blt(self.x, self.y, 0, 8, 72, self.direction*self.largeur, self.hauteur, 2)
 
-        if self.marche == True and self.grounded and not self.court:            #anim marche
+        if self.marche == True and self.grounded and not self.court:                                       #anim marche
             if pyxel.frame_count % 20 < 10:
                 pyxel.blt(self.x, self.y, 0, 0, 64, self.direction*self.largeur, self.hauteur, 2)
             elif not self.est_en_dash:
