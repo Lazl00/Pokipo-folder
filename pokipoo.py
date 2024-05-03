@@ -164,7 +164,7 @@ class Joueur:
                 else:
                     pyxel.blt(self.x, self.y, 0, 24, 16, self.direction*self.largeur, self.hauteur, 2)
 
-        if self.marche == False and self.grounded:                                                          #anim statique
+        if self.marche == False and self.grounded and not self.est_en_dash:                                                          #anim statique
                 if pyxel.frame_count % 120 < 60:
                     pyxel.blt(self.x, self.y, 0, 0, 72, self.direction*self.largeur, self.hauteur, 2)
                 else:
