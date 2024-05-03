@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import pyxel
-
+TILEMAP=int(input("Choisissez une map (0,1) : "))
 class Joueur:
     def __init__(self, x, y):
         # Position et dimensions du joueur
@@ -22,7 +22,7 @@ class Joueur:
         self.grounded = True
         self.double_saut_dispo = True
         self.marche = False
-        self.direction=-1 # 0 gauche    1 droite
+        self.direction=-1 # -1 gauche    1 droite
         self.court=False
         self.cd_course=0
         self.court_max=False
@@ -50,16 +50,31 @@ class Joueur:
         
         # Gestion des déplacements horizontaux
         if pyxel.btn(pyxel.KEY_Q):
-            self.vel_x = -self.vitesse
-            self.marche = True
-            self.direction = -1
+            if not self.grounded:
+                if self.vel_x>0:
+                    self.vel_x=self.vel_x-0.1
+                else:
+                    self.vel_x=self.vel_x-0.025
+            else:
+                self.vel_x = -self.vitesse
+                self.marche = True
+                self.direction = -1
         elif pyxel.btn(pyxel.KEY_D):
-            self.vel_x = self.vitesse
-            self.marche = True
-            self.direction = 1
+            if not self.grounded:
+                if self.vel_x<0:
+                    self.vel_x=self.vel_x+0.1
+                else:
+                    self.vel_x=self.vel_x+0.025
+            else:
+                self.vel_x = self.vitesse
+                self.marche = True
+                self.direction = 1
         else:
-            self.vel_x = 0
-            self.marche = False
+            if not self.grounded:
+                pass
+            else:
+                self.vel_x = 0
+                self.marche = False
         
          # Gestion du sprint
         if pyxel.btn(pyxel.KEY_CTRL) and pyxel.btn(pyxel.KEY_Q):
@@ -164,7 +179,7 @@ class Joueur:
                 else:
                     pyxel.blt(self.x, self.y, 0, 24, 16, self.direction*self.largeur, self.hauteur, 2)
 
-        if self.marche == False and self.grounded and not self.est_en_dash:                                                          #anim statique
+        if self.marche == False and self.grounded:                                                          #anim statique
                 if pyxel.frame_count % 120 < 60:
                     pyxel.blt(self.x, self.y, 0, 0, 72, self.direction*self.largeur, self.hauteur, 2)
                 else:
@@ -196,6 +211,7 @@ class App:
     def draw(self):
         # Remplir l'écran avec une couleur de fond grise
         pyxel.cls(12)
+        pyxel.bltm(0, 0, TILEMAP, 0, 0, 10000, 10000, 0)
         # Dessiner le joueur
         self.joueur.draw()
         pos_x=self.joueur.x
@@ -204,4 +220,5 @@ class App:
         else:
             pyxel.camera(pos_x-80,0)
         pyxel.text(10,10, "Ladies, with gentle hands", 3)
+        
 App()
