@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import pyxel
-
+TILEMAP=int(input("Choisissez une map (0,1) : "))
 class Joueur:
     def __init__(self, x, y):
         # Position et dimensions du joueur
@@ -196,7 +196,14 @@ class App:
     def draw(self):
         # Remplir l'écran avec une couleur de fond grise
         pyxel.cls(12)
+        pyxel.bltm(0, 0, TILEMAP, 0, 0, 10000, 10000, 0)
         # Dessiner le joueur
         self.joueur.draw()
+        pos_x=self.joueur.x
+        if self.joueur.x<80:
+            pyxel.camera(0,0)
+        else:
+            pyxel.camera(pos_x-80,0)
+        pyxel.text(10,10, "Ladies, with gentle hands", 3)
 
 App()
