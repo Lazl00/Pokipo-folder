@@ -1,8 +1,44 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import pyxel
+
 TILEMAP=int(input("Choisissez une map (0,1) : "))
+
+"""
+
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██████╗░░█████╗░██╗░░██╗██╗██████╗░░█████╗░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██╔══██╗██╔══██╗██║░██╔╝██║██╔══██╗██╔══██╗░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░█████╗██████╔╝██║░░██║█████═╝░██║██████╔╝██║░░██║█████╗░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░╚════╝██╔═══╝░██║░░██║██╔═██╗░██║██╔═══╝░██║░░██║╚════╝░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██║░░░░░╚█████╔╝██║░╚██╗██║██║░░░░░╚█████╔╝░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░╚═╝░░░░░░╚════╝░╚═╝░░╚═╝╚═╝╚═╝░░░░░░╚════╝░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+⣿⣿⣿⣿⠟⣩⣴⣶⣦⣍⠻⣿⣿⣿⣿⣿⣿⣿⢏⣾⣿⣿⠿⣿⣿⣿⣌⢻⣿
+⣿⣿⣿⢏⣾⣿⣿⠿⣿⣿⣿⣌⢻⣿⣿⣿⠟⣩⣬⣭⠻⣿⣀⣿⣿⣿⢟⣤⡙
+⣿⠟⣩⣬⣭⠻⣿⣀⣿⣿⣿⢟⣤⡙⢿⣷⣤⣒⠲⠶⢿⣘⣛⡛⠿⣿⣸⣿⣿
+⣷⣤⣒⠲⠶⢿⣘⣛⡛⠿⣿⣸⣿⣿⣷⣝⠿⣿⣿⠸⣿⣿⣿⣿⣿⣦⢹⣿⣿
+⣿⣿⣿⣿⠸⣿⣿⣿⣿⣿⣦⢹⣿⣿⣿⣿⣷⣌⠻⠟⣠⣴⣶⣦⣍⠻⡼⣿⣿
+⣿⣿⣿⣿⠟⣠⣴⣶⣦⣍⠻⡼⣿⣿⣿⣿⣿⢿⢏⣾⣿⣿⠿⣿⣿⣷⣶⣝⢿
+⣿⣿⣿⢏⣾⣿⣿⠿⣿⣿⣷⣶⣝⢿⣿⣿⠟⣩⣬⣭⠻⣿⣀⣿⣿⣿⣿⣿⣷
+⣿⠟⣩⣬⣭⠻⣿⣀⣿⣿⣿⣿⣿⣷⣦⣷⣤⣒⠲⠶⢿⣘⣛⡛⠿⣿⣿⣿⣿
+⣷⣤⣒⠲⠶⢿⣘⣛⡛⠿⣿⣿⣿⣿⣿⣿⣿⣷⣷⠸⣿⣿⣿⣿⣿⣦⣤⣍⠻
+⣿⣿⣿⣿⠸⣿⣿⣿⣿⣿⣦⣤⣍⠻⣿⣿⣿⣿⣿⣷⣌⠻⢿⣿⣿⣿⠟⣁⡀
+⣿⣿⣿⣿⣷⣌⠻⢿⣿⣿⣿⠟⣁⡀⢀⣠⠄⣠⣶⣶⣿⣿⡗⣠⣴⣶⣦⣍⠻
+⣿⣿⣿⣿⣿⣿⣿⠶⠶⠶⠶⠾⠿⠁⢈⣴⣾⣿⣿⣿⣿⢏⣾⣿⣿⠿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣇⡈⢉⣩⡭⠽⢛⣒⣒⣒⣈⣿⣿⠟⣩⣬⣭⠻⣿⣀⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣇⣉⣥⣶⣿⣿⣿⣿⣿⣿⣿⣷⣤⣒⠲⠶⢿⣘⣛⡛⠿⣿         
+
+
+░██████╗███████╗████████╗████████╗██╗███╗░░██╗░██████╗░░██████╗
+██╔════╝██╔════╝╚══██╔══╝╚══██╔══╝██║████╗░██║██╔════╝░██╔════╝
+╚█████╗░█████╗░░░░░██║░░░░░░██║░░░██║██╔██╗██║██║░░██╗░╚█████╗░
+░╚═══██╗██╔══╝░░░░░██║░░░░░░██║░░░██║██║╚████║██║░░╚██╗░╚═══██╗
+██████╔╝███████╗░░░██║░░░░░░██║░░░██║██║░╚███║╚██████╔╝██████╔╝
+╚═════╝░╚══════╝░░░╚═╝░░░░░░╚═╝░░░╚═╝╚═╝░░╚══╝░╚═════╝░╚═════╝░
+
+"""
 class Joueur:
+
     def __init__(self, x, y):
         # Position et dimensions du joueur
         self.x = x
@@ -16,37 +52,51 @@ class Joueur:
         self.gravite = 0.20
         self.vel_x = 0
         self.vel_y = 0
+
         """"""""""""""""""""""""""""""
         """ État du joueur """""""""""
         """"""""""""""""""""""""""""""
-        self.grounded = True
+        # états du mouvement du joueur
+
+        self.grounded = True            # True = au sol     False = dans les airs
         self.double_saut_dispo = True
         self.marche = False
-        self.direction=-1 # -1 gauche    1 droite
+        self.direction=-1               # -1 gauche    1 droite
         self.court=False
-        self.cd_course=0
+        self.cd_course=0                # compteur jusqu'à la course max
         self.court_max=False
 
         # états de l'air dash
         self.airdash_dispo=True
-        self.jauge_airdash=0
+        self.jauge_airdash=0            # compteur de la durée de l'airdash
         self.est_en_airdash=False
         self.auto_airdash=False
-        self.vel_airdash=0
+        self.vel_airdash=0              # compteur de 'puissance' de l'airdash
 
         # états du dash
         self.dash_dispo=True
-        self.jauge_dash=0
-        self.cd_dash=0
-        self.cd_dashmax=0
-        self.est_en_dash=False
-        self.auto_dash=False
-        self.auto_dashmax=False
-        self.vel_dash=0
-        """"""""""""""""""""""""""""""
-        """"""""""""""""""""""""""""""
-        """"""""""""""""""""""""""""""
+        self.jauge_dash=0               # compteur de la durée du dash
+        self.cd_dash=0                  # compteur de la durée du reload du dash
+        self.en_dash=False
+        self.vel_dash=0                 # compteur de 'puissance' du dash
 
+        """"""""""""""""""""""""""""""
+        """"""""""""""""""""""""""""""
+        """"""""""""""""""""""""""""""
+    """
+
+███████╗░█████╗░███╗░░██╗░█████╗░████████╗██╗░█████╗░███╗░░██╗░██████╗
+██╔════╝██╔══██╗████╗░██║██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║██╔════╝
+█████╗░░██║░░██║██╔██╗██║██║░░╚═╝░░░██║░░░██║██║░░██║██╔██╗██║╚█████╗░
+██╔══╝░░██║░░██║██║╚████║██║░░██╗░░░██║░░░██║██║░░██║██║╚████║░╚═══██╗
+██║░░░░░╚█████╔╝██║░╚███║╚█████╔╝░░░██║░░░██║╚█████╔╝██║░╚███║██████╔╝
+╚═╝░░░░░░╚════╝░╚═╝░░╚══╝░╚════╝░░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░
+
+    """
+
+    ########################################
+    ########### Déplacements horizontaux ###
+    ########################################
     def move(self):
         key_dir = 0
         if pyxel.btn(pyxel.KEY_Q):
@@ -68,12 +118,24 @@ class Joueur:
                 self.vel_x = 0
                 self.marche = False
 
-    def update(self):
-        self.gravite=0.2
-        self.vitesse=1
-        self.court=False
-        self.court_max=False
-        
+
+
+    def update(self):       # Rafraichit l'état du jeu a chaque frame
+
+        self.gravite=0.2        # Reset la gravité
+        self.vitesse=1          # Reset la vitesse par défaut
+        self.court=False        # Reset l'état de la course
+        self.court_max=False    # Reset l'état de la course à vitesse max
+
+
+
+        ########################################
+        ########################### Air Dash ###
+        ########################################
+
+        if pyxel.btn( pyxel.MOUSE_BUTTON_RIGHT) and not self.grounded and self.airdash_dispo :
+            self.auto_airdash=True
+
         if self.auto_airdash == True:
             self.gravite = 0
             self.vel_airdash = self.direction*4-self.vel_x
@@ -82,17 +144,34 @@ class Joueur:
                 self.auto_airdash = False
                 self.airdash_dispo = False
         
-        if self.auto_dash == True:
+        ########################################
+
+
+
+
+        ########################################       
+        ############################### Dash ###
+        ########################################
+        if pyxel.btn( pyxel.MOUSE_BUTTON_RIGHT) and self.grounded and self.dash_dispo :
+            self.en_dash=True
+
+        if self.en_dash == True:
             self.vel_dash = self.direction*3
             self.cd_dash+=1
             if self.cd_dash>=10:
                  self.dash_dispo=False
-                 self.auto_dash=False
+                 self.en_dash=False
+
+        ########################################
+                 
 
 
-             
 
-        # Gestion des déplacements horizontaux
+
+        ########################################
+        ####################### Déplacements ###
+        ########################################
+
         self.move()
 
         if not self.auto_airdash:
@@ -105,7 +184,7 @@ class Joueur:
                 if self.vel_airdash>=0:
                     self.vel_airdash=0
 
-        if not self.auto_dash:
+        if not self.en_dash:
             if self.vel_dash>=0:
                 self.vel_dash-=0.2
                 if self.vel_dash<=0:
@@ -115,7 +194,15 @@ class Joueur:
                 if self.vel_dash>=0:
                     self.vel_dash=0
 
-         # Gestion du sprint
+        ########################################
+
+
+
+
+        ########################################
+        ############################# Course ### 
+        ########################################
+
         if pyxel.btn(pyxel.KEY_CTRL):
             self.court = True
             self.move()
@@ -131,8 +218,16 @@ class Joueur:
             self.cd_course=0
             self.court_max=False
 
+        ########################################
 
-        # Gestion du saut et double saut
+
+
+
+
+        ########################################
+        ################ Saut et double saut ###
+        ########################################
+
         if pyxel.btnp(pyxel.KEY_SPACE):
             if self.grounded:
                 self.vel_y = -self.puissance_saut
@@ -140,29 +235,57 @@ class Joueur:
             elif self.double_saut_dispo:
                 self.vel_y = -self.puissance_saut
                 self.double_saut_dispo = False
-                
-        # Gestion du air dash
-        if pyxel.btn( pyxel.MOUSE_BUTTON_RIGHT) and not self.grounded and self.airdash_dispo :
-            self.auto_airdash=True
 
-        # Gestion du dash
-        if pyxel.btn( pyxel.MOUSE_BUTTON_RIGHT) and self.grounded and self.dash_dispo :
-            self.auto_dash=True
+        ########################################
 
-        # Gestion du fast fall
+
+
+
+
+        ########################################
+        ########################## Fast fall ###
+        ########################################
+
         if pyxel.btn(pyxel.KEY_S) and not self.grounded:
             self.vel_y += 1.2 * self.gravite
+        
+        ########################################
 
-        # Gravité
+
+
+
+
+        ########################################
+        ############################ Gravité ###
+        ########################################
+
         self.vel_y += self.gravite
 
-        # Mise à jour de la position
+        ########################################
+
+
+
+
+
+        ########################################
+        ######### Mise à jour de la position ###
+        ########################################
+
         self.x += self.vel_dash
         self.x += self.vel_airdash
         self.x += self.vel_x
         self.y += self.vel_y
 
-        # Détection de la fin du saut
+        ########################################
+
+
+
+
+
+        ########################################
+        ######## Détection de la fin du saut ###
+        ########################################
+
         if self.y + self.hauteur >= pyxel.height:
             self.y = pyxel.height - self.hauteur
             self.vel_y = 0
@@ -178,53 +301,75 @@ class Joueur:
                     self.cd_dash=0
                     self.dash_dispo = True
 
+        ########################################
+        ########################################
 
 
 
+    """
+    
+░█████╗░███╗░░██╗██╗███╗░░░███╗░█████╗░████████╗██╗░█████╗░███╗░░██╗░██████╗
+██╔══██╗████╗░██║██║████╗░████║██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║██╔════╝
+███████║██╔██╗██║██║██╔████╔██║███████║░░░██║░░░██║██║░░██║██╔██╗██║╚█████╗░
+██╔══██║██║╚████║██║██║╚██╔╝██║██╔══██║░░░██║░░░██║██║░░██║██║╚████║░╚═══██╗
+██║░░██║██║░╚███║██║██║░╚═╝░██║██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║██████╔╝
+╚═╝░░╚═╝╚═╝░░╚══╝╚═╝╚═╝░░░░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░
+
+    """
 
 
     def draw(self):
         # Dessiner le joueur
-        if self.court and self.grounded and not self.court_max and pyxel.btn( pyxel.KEY_D):#anim début de course (pré-glissade)
+        if self.court and self.grounded and not self.court_max and pyxel.btn( pyxel.KEY_D): #                    anim début de course (pré-glissade)
                 if pyxel.frame_count % 8 < 4:
                     pyxel.blt(self.x, self.y, 0, 16, 64, self.direction*self.largeur, self.hauteur, 2)
                 else:
                     pyxel.blt(self.x, self.y, 0, 24, 64, self.direction*self.largeur, self.hauteur, 2)
-        if self.court and self.grounded and not self.court_max and pyxel.btn( pyxel.KEY_Q):#anim début de course (pré-glissade)
+        if self.court and self.grounded and not self.court_max and pyxel.btn( pyxel.KEY_Q): #                    anim début de course (pré-glissade)
                 if pyxel.frame_count % 8 < 4:
                     pyxel.blt(self.x, self.y, 0, 16, 64, self.direction*self.largeur, self.hauteur, 2)
                 else:
                     pyxel.blt(self.x, self.y, 0, 24, 64, self.direction*self.largeur, self.hauteur, 2)
 
-        if self.court_max and self.grounded:                                                          #anim course max (glissade)
+        if self.court_max and self.grounded: #                                                                   anim course max (glissade)
                     pyxel.blt(self.x, self.y, 0, 16, 72, self.direction*self.largeur, self.hauteur, 2)
 
-        if not self.grounded and not self.auto_airdash:                                               #anim vol
+        if not self.grounded and not self.auto_airdash: #                                                        anim vol
                 if pyxel.frame_count % 8 < 4:
                     pyxel.blt(self.x, self.y, 0, 16, 16, self.direction*self.largeur, self.hauteur, 2)
                 else:
                     pyxel.blt(self.x, self.y, 0, 24, 16, self.direction*self.largeur, self.hauteur, 2)
 
-        if self.marche == False and self.grounded:                                                    #anim statique
+        if self.marche == False and self.grounded: #                                                             anim statique
                 if pyxel.frame_count % 120 < 60:
                     pyxel.blt(self.x, self.y, 0, 0, 72, self.direction*self.largeur, self.hauteur, 2)
                 else:
                     pyxel.blt(self.x, self.y, 0, 8, 72, self.direction*self.largeur, self.hauteur, 2)
 
-        if self.marche == True and self.grounded and not self.court:                         #anim marche
+        if self.marche == True and self.grounded and not self.court: #                                           anim marche
             if pyxel.frame_count % 20 < 10:
                 pyxel.blt(self.x, self.y, 0, 0, 64, self.direction*self.largeur, self.hauteur, 2)
-            elif not self.auto_dash:
+            elif not self.en_dash:
                 pyxel.blt(self.x, self.y, 0, 8, 64, self.direction*self.largeur, self.hauteur, 2)
 
-        if self.auto_dash:                                                               #anim dash
+        if self.en_dash: #                                                                                       anim dash
              pyxel.blt(self.x, self.y, 0, 0, 80, self.direction*self.largeur, self.hauteur, 2)
-        if self.auto_airdash:                                                              #anim airdash
+        if self.auto_airdash: #                                                                                  anim airdash
              pyxel.blt(self.x, self.y, 0, 0, 80, self.direction*self.largeur, self.hauteur, 2)
         
 
-        
+"""
+
+░█████╗░██████╗░██████╗░██╗░░░░░██╗░█████╗░░█████╗░████████╗██╗░█████╗░███╗░░██╗
+██╔══██╗██╔══██╗██╔══██╗██║░░░░░██║██╔══██╗██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║
+███████║██████╔╝██████╔╝██║░░░░░██║██║░░╚═╝███████║░░░██║░░░██║██║░░██║██╔██╗██║
+██╔══██║██╔═══╝░██╔═══╝░██║░░░░░██║██║░░██╗██╔══██║░░░██║░░░██║██║░░██║██║╚████║
+██║░░██║██║░░░░░██║░░░░░███████╗██║╚█████╔╝██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║
+╚═╝░░╚═╝╚═╝░░░░░╚═╝░░░░░╚══════╝╚═╝░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝
+
+"""
 class App:
+
     def __init__(self):
         pyxel.init(160, 120, title="Pokipo", fps=60, quit_key=pyxel.KEY_ESCAPE)
         pyxel.load("pokipo.pyxres")
@@ -245,6 +390,6 @@ class App:
             pyxel.camera(0,0)
         else:
             pyxel.camera(pos_x-80,0)
-        pyxel.text(10,10, "Ladies, with gentle hands", 3)
+        pyxel.text(10,10, "Il etait une grosse fois le gros pokipo", 0)
         
 App()
