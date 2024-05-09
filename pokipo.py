@@ -26,7 +26,7 @@ TILEMAP=int(input("Choisissez une map (0,1) : "))
 ⣿⣿⣿⣿⣷⣌⠻⢿⣿⣿⣿⠟⣁⡀⢀⣠⠄⣠⣶⣶⣿⣿⡗⣠⣴⣶⣦⣍⠻
 ⣿⣿⣿⣿⣿⣿⣿⠶⠶⠶⠶⠾⠿⠁⢈⣴⣾⣿⣿⣿⣿⢏⣾⣿⣿⠿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣇⡈⢉⣩⡭⠽⢛⣒⣒⣒⣈⣿⣿⠟⣩⣬⣭⠻⣿⣀⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣇⣉⣥⣶⣿⣿⣿⣿⣿⣿⣿⣷⣤⣒⠲⠶⢿⣘⣛⡛⠿⣿         
+⣿⣿⣿⣿⣿⣿⣿⣇⣉⣥⣶⣿⣿⣿⣿⣿⣿⣿⣷⣤⣒⠲⠶⢿⣘⣛⡛⠿⣿
 
 
 ░██████╗███████╗████████╗████████╗██╗███╗░░██╗░██████╗░░██████╗
@@ -137,10 +137,10 @@ class Joueur:
             self.auto_airdash=True
 
         if self.auto_airdash == True:
-            self.gravite = 0
+            self.gravite = 0.2
             self.vel_airdash = self.direction*3-self.vel_x
             self.jauge_airdash += 1
-            if self.jauge_airdash >= 10:
+            if self.jauge_airdash >= 12:
                 self.auto_airdash = False
                 self.airdash_dispo = False
         
@@ -234,7 +234,7 @@ class Joueur:
                 self.grounded = False
             elif self.double_saut_dispo:
                 self.vel_y = -self.puissance_saut
-                self.double_saut_dispo = False
+                self.double_saut_dispo = True
 
         ########################################
 
