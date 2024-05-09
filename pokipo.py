@@ -138,7 +138,7 @@ class Joueur:
 
         if self.auto_airdash == True:
             self.gravite = 0
-            self.vel_airdash = self.direction*4-self.vel_x
+            self.vel_airdash = self.direction*3-self.vel_x
             self.jauge_airdash += 1
             if self.jauge_airdash >= 10:
                 self.auto_airdash = False
@@ -156,7 +156,7 @@ class Joueur:
             self.en_dash=True
 
         if self.en_dash == True:
-            self.vel_dash = self.direction*3
+            self.vel_dash = self.direction*2
             self.cd_dash+=1
             if self.cd_dash>=10:
                  self.dash_dispo=False
