@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import pyxel
-menu = int(input("Bonjour! Voulez-vous 'Jouer' ou voir le 'Score' ? (Jouer=0, Score=1)  : "))
-TILEMAP=int(input("Choisissez une map (0,1) : "))
+import sqlite3
+
+connexion=sqlite3.connect("Database_scores.sqlite3")
+
+timer=0
+menu=int(input("Voulez vous jouer (0) ou bien voir les scores (1) : "))
+if menu==0:
+    playername=input("Insérez votre nom de joueur : ")
+    assert len(playername)<=7, f"Erreur : la chaîne de caractères ne doit pas dépasser 7 caractères."
+    TILEMAP=int(input("Choisissez une map (0,1) : "))
+
 
 """
 
@@ -37,6 +46,8 @@ TILEMAP=int(input("Choisissez une map (0,1) : "))
 ╚═════╝░╚══════╝░░░╚═╝░░░░░░╚═╝░░░╚═╝╚═╝░░╚══╝░╚═════╝░╚═════╝░
 
 """
+
+
 class Joueur:
 
     def __init__(self, x, y):
@@ -234,7 +245,7 @@ class Joueur:
                 self.grounded = False
             elif self.double_saut_dispo:
                 self.vel_y = -self.puissance_saut
-                self.double_saut_dispo = True
+                self.double_saut_dispo = False
 
         ########################################
 
@@ -369,31 +380,48 @@ class Joueur:
 
 """
 class App:
+    if menu==1:
+        liste_scores=connexion.execute("SELECT * FROM TOP_SCORES\
+                                       ORDER BY Temps ASC")
+        print(liste_scores)
 
-    def __init__(self):
-        pyxel.init(160, 120, title="Pokipo", fps=60, quit_key=pyxel.KEY_ESCAPE)
-        pyxel.load("pokipo.pyxres")
-        self.joueur = Joueur(80, 60)
-        pyxel.run(self.update, self.draw)
-
-    def update(self):
-        self.joueur.update()
-
-    def draw(self):
+    if menu==0:
         
-        #on met la map en place
-        if menu == 0:
-            pyxel.cls(0)
-            pyxel.bltm(0, 0, TILEMAP, 0, 8, 4000, 250, 0) # Affiche la tilemap
-            pyxel.flip() # Permet de mettre à jour l'affichage
-            #on crée une caméra
-            pos_x=self.joueur.x
-            if self.joueur.x<80:
-                pyxel.camera(0.0)
-            else:
-                pyxel.camera(pos_x-80,0)
-        
+        def __init__(self):
+            pyxel.init(160, 120, title="Pokipo", fps=60, quit_key=pyxel.KEY_ESCAPE)
+            pyxel.load("pokipo.pyxres")
+            self.joueur = Joueur(80, 60)
+            pyxel.run(self.update, self.draw)
+
+        def update(self):
+            self.joueur.update()
+            
+
+        def draw(self):
+            # Remplir l'écran avec une couleur de fond grise
+            pyxel.cls(12)
+            pyxel.bltm(0, 0, TILEMAP, 0, 0, 10000, 10000, 0)
             # Dessiner le joueur
             self.joueur.draw()
-        
+            pos_x=self.joueur.x
+            if self.joueur.x<80:
+                pyxel.camera(0,0)
+            else:
+                pyxel.camera(pos_x-80,0)
+            pyxel.text(10,10, "Q,D : gauche, droite", 0)
+            pyxel.text(10,16, "ctrl : run", 0)
+            pyxel.text(10,22, "M2 : dash", 0)
+            pyxel.text(10,28, "space : jump/double jump", 0)
+            pyxel.text(10,34, "S (while aireborne) : fastfall", 0)
+            if self.joueur.x>900: #modifier ça pour que ce soit la dsitance de la ligne d'arrivée
+                 pyxel.quit()
+                 connexion.execute("INSERT INTO TOP_SCORES\
+                                   (Nom joueur, Temps) VALUES\
+                                   (playername,55)") #modifier le 55 par la variable qui représente le temps du timer
+                 connexion.commit()
+                 connexion.close()
+
+
+
+
 App()
